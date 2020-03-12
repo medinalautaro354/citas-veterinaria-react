@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 class Quote extends Component {
   deleteQuote = () => {
@@ -36,4 +37,15 @@ class Quote extends Component {
   }
 }
 
+Quote.propTypes ={
+  quote: PropTypes.shape({
+    date: PropTypes.string.isRequired,
+    hour: PropTypes.string.isRequired,
+    petName: PropTypes.string.isRequired,
+    ownerName: PropTypes.string.isRequired,
+    symptoms: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired
+  }),
+  deleteQuote: PropTypes.func.isRequired
+}
 export default Quote;

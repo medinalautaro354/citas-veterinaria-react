@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import uuid from "uuid";
+import PropTypes from 'prop-types';
+
 
 class QuoteForm extends Component {
   petNameRef = React.createRef();
@@ -131,6 +133,10 @@ class QuoteForm extends Component {
       </div>
     );
   }
+}
+
+QuoteForm.propTypes ={
+  createQuote: PropTypes.func.isRequired
 }
 
 export default QuoteForm;

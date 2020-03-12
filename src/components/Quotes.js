@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Quote from "./Quote";
+import PropTypes from 'prop-types';
 
 class Quotes extends Component {
   state = {};
@@ -27,4 +28,8 @@ class Quotes extends Component {
   }
 }
 
+Quotes.propTypes ={
+  quotes: PropTypes.array.isRequired,
+  deleteQuote: PropTypes.func.isRequired
+}
 export default Quotes;
