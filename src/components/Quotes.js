@@ -2,8 +2,18 @@ import React, { Component } from "react";
 import Quote from "./Quote";
 import PropTypes from 'prop-types';
 
+import {connect} from 'react-redux';
+import {getQuotes} from '../actions/quotesActions';
+
+import store from '../store';
+store.subscribe(() =>{
+  localStorage.setItem('quotes', JSON.stringify(store.getState()));
+})
+
 class Quotes extends Component {
-  state = {};
+  componentDidMount(){
+    this.props.getQuotes();
+  }
   render() {
     const quotes = this.props.quotes;
     const menssage =
@@ -18,7 +28,6 @@ class Quotes extends Component {
               <Quote
                 key={index}
                 quote={this.props.quotes[index]}
-                deleteQuote={this.props.deleteQuote}
               />
             ))}
           </div>
@@ -30,6 +39,8 @@ class Quotes extends Component {
 
 Quotes.propTypes ={
   quotes: PropTypes.array.isRequired,
-  deleteQuote: PropTypes.func.isRequired
 }
-export default Quotes;
+const mapStateToProps = state =>({
+  quotes: state.quotes.quotes
+})
+export default connect(mapStateToProps, {getQuotes})(Quotes);

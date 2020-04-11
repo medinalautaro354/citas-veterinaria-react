@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 
+import {connect} from 'react-redux';
+import {deleteQuote} from '../actions/quotesActions';
+
 class Quote extends Component {
   deleteQuote = () => {
     this.props.deleteQuote(this.props.quote.id);
@@ -48,4 +51,4 @@ Quote.propTypes ={
   }),
   deleteQuote: PropTypes.func.isRequired
 }
-export default Quote;
+export default connect(null, {deleteQuote})(Quote);

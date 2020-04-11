@@ -2,17 +2,20 @@ import React, { Component } from "react";
 import uuid from "uuid";
 import PropTypes from 'prop-types';
 
+import {connect} from 'react-redux';
+import {addQuote} from '../actions/quotesActions';
+import {showError} from '../actions/errorActions';
 
 class QuoteForm extends Component {
+
+  componentDidMount(){
+    this.props.showError(false);
+  }
   petNameRef = React.createRef();
   ownerNameRef = React.createRef();
   dateRef = React.createRef();
   hourRef = React.createRef();
   symptomsRef = React.createRef();
-
-  state = {
-    error: false
-  };
 
   createNewQuote = e => {
     e.preventDefault();
@@ -33,21 +36,17 @@ class QuoteForm extends Component {
       quote.hour === "" ||
       quote.symptoms === ""
     ) {
-      this.setState({
-        error: true
-      });
+      this.props.showError(true);
     } else {
-      this.setState({
-        error: false
-      });
+      this.props.showError(false);
 
-      this.props.createQuote(quote);
+      this.props.addQuote(quote);
     }
 
     e.currentTarget.reset();
   };
   render() {
-    const existError = this.state.error;
+    const existError = this.props.error;
 
     return (
       <div className="card mt-5">
@@ -136,7 +135,12 @@ class QuoteForm extends Component {
 }
 
 QuoteForm.propTypes ={
-  createQuote: PropTypes.func.isRequired
+  addQuote: PropTypes.func.isRequired
 }
 
-export default QuoteForm;
+const mapStateToProps = state =>({
+  quotes:state.quotes.quotes,
+  error: state.error.error
+
+})
+export default connect(mapStateToProps, {addQuote, showError})(QuoteForm);
